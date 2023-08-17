@@ -163,14 +163,14 @@ public class DealSaver implements GameSaver {
         pool.batchUpdate(INSERT_SAVES_QUERY,
                 data,
                 (stmt, save) -> {
-                    stmt.setObject(1, save.getTime());
-                    stmt.setObject(2, save.getId());
+                    stmt.setString(1, save.getTime());
+                    stmt.setString(2, save.getId());
                     stmt.setInt(3, save.getTeamId());
-                    stmt.setObject(4, save.getCallbackUrl());
-                    stmt.setObject(5, save.getRoom());
-                    stmt.setObject(6, save.getGame());
-                    stmt.setObject(7, save.getScore());
-                    stmt.setObject(8, save.getSave());
+                    stmt.setString(4, save.getCallbackUrl());
+                    stmt.setString(5, save.getRoom());
+                    stmt.setString(6, save.getGame());
+                    stmt.setString(7, save.getScore());
+                    stmt.setString(8, save.getSave());
                     return true;
                 });
 
@@ -201,7 +201,7 @@ public class DealSaver implements GameSaver {
                         player.getCallbackUrl(),
                         player.getRoom(),
                         player.getGame(),
-                        player.getScore(),
+                        player.getScore().toString(),
                         save
                 });
 

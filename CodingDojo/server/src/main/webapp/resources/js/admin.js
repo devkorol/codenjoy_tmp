@@ -25,10 +25,10 @@ pages = pages || {};
 function defaultRegistrationSettings() {
     return {
         showNames: true,
-        showData1: true,
-        showData2: true,
-        showData3: true,
-        showData4: true,
+        showData1: false,
+        showData2: false,
+        showData3: false,
+        showData4: false,
         showGameModes: true,
         defaultGameMode: null,
         gameModes: {

@@ -25,6 +25,7 @@
 cd ..
 
 export ROOT=$PWD
+export GAMES_TO_RUN=expansion
 
 if [ "$GAMES_TO_RUN" == "" ] ; then
 	# export GAMES_TO_RUN=all

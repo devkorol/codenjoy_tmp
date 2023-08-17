@@ -24,8 +24,9 @@
 
 cd ..
 
-java -jar ./server/target/codenjoy-contest.war \
-        --MAVEN_OPTS=-Xmx1024m \
-        --spring.profiles.active=sqlite,debug \
-        --context=/codenjoy-contest \
-        --server.port=8080
+java -jar /home/kkorol/codenjoy/CodingDojo/server/target/codenjoy-contest.war \
+        --MAVEN_OPTS=-Xmx2048m \
+        --spring.profiles.active=postgres,debug \
+	--database.password=rIzv8o32On!z \
+	--context=/game \
+        --server.port=80 

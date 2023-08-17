@@ -28,7 +28,7 @@ game:
     auto: true
     ticks: 30
     load-on-start: true
-  ai: true
+  ai: false
   player:
     score:
       cleanup: false
@@ -69,7 +69,7 @@ database:
 
 admin:
   login: admin@codenjoyme.com
-  password: admin
+  password: g9F7W&3xQw5b
 
 log:
   debug: false
