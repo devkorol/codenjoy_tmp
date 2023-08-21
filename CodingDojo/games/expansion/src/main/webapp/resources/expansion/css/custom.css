@@ -8,14 +8,102 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
+body {
+    background: linear-gradient(45deg, #001e5b, #9125ac, #0063af) !important;
+    height: 100vh;
+}
+a {
+    color: #0d497d;
+}
+.logout-link {
+    display: block;
+    position: relative;
+    text-align: right;
+    float: none;
+    color: #fff;
+    margin-right: 50px;
+}
+#board_page {
+    display: flex;
+    justify-content: center;
+    /*align-items: center;*/
+}
+#glasses {
+    width: auto;
+    float: none;
+    position: relative;
+}
+#leaderboard {
+    width: 500px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+    background: rgba(255, 255, 255, 0.4);
+    color: #970e8a;
+    padding: 40px;
+    margin: 0 40px;
+    font-family: "Courier New", monospace;
+
+    font-weight: 100;
+    position: relative;
+}
+#table-logs-body tr td:first-child{
+    vertical-align: middle;
+}
+#table-logs-body tr td {
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    padding: 10px;
+}
+#table-logs-body tr:first-child td {
+    border-top: 1px solid rgba(255, 255, 255, .1);
+}
+#table-logs tr th {
+    padding: 10px;
+}
+#table-logs td {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#table-logs td a {
+    font-weight: bold;
+}
+#table-logs-body tr td:first-child{
+    vertical-align: middle;
+}
+#table-logs-body tr td {
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    padding: 10px;
+}
+#table-logs-body tr:first-child td {
+    border-top: 1px solid rgba(255, 255, 255, .1);
+}
+#table-logs tr th {
+    padding: 10px;
+}
+#table-logs td {
+    font-size: 16px;
+}
+
+#table-logs td a {
+    font-weight: bold;
+}
+
+.tabs {
+    display: none;
+}
+.player-canvas canvas {
+    width: 90vh !important;
+    border: none;
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+}
