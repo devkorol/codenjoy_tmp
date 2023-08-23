@@ -2,20 +2,146 @@
  * #%L
  * Codenjoy - it's a dojo-like platform from developers to developers.
  * %%
- * Copyright (C) 2012 - 2023 Codenjoy
+ * Copyright (C) 2012 - 2022 Codenjoy
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
+body {
+    /*background: linear-gradient(45deg, rgba(0, 30, 91,.5), rgba(145, 37, 172, 0.5), rgba(0, 99, 175,0.5)) !important;*/
+    background: url('../img/bg_ru.jpg') no-repeat fixed center center !important;
+    background-size: cover !important;
+    min-height: 100vh;
+    font-family: "Courier New", monospace !important;
+    /*font-family: Tahoma, Geneva, sans-serif !important;*/
+}
+
+body:before {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /*content: "";*/
+    background: rgba(0,0,0,.4);
+}
+
+a {
+    color: #a4a4a4;
+    font-weight: 100;
+}
+
+a:hover {
+    color: #fff;
+}
+
+.logout-link {
+    display: block;
+    position: relative;
+    text-align: right;
+    float: none;
+    color: #fff;
+    margin-right: 50px;
+    line-height: 42px;
+}
+#board_page {
+    display: flex;
+    justify-content: center;
+}
+#glasses {
+    width: auto;
+    float: none;
+    position: relative;
+}
+#leaderboard {
+    width: 500px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, .4);
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 40px;
+    margin: 0 40px;
+    font-weight: normal;
+    position: relative;
+}
+#table-logs-body tr td:first-child{
+    vertical-align: middle;
+}
+#table-logs-body tr td {
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    padding: 10px;
+}
+#table-logs-body tr:first-child td {
+    border-top: 1px solid rgba(255, 255, 255, .1);
+}
+#table-logs tr th {
+    padding: 10px;
+}
+#table-logs td {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#table-logs td a {
+    font-weight: bold;
+}
+#table-logs-body tr td:first-child{
+    vertical-align: middle;
+}
+#table-logs-body tr td {
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    padding: 10px;
+}
+#table-logs-body tr:first-child td {
+    border-top: 1px solid rgba(255, 255, 255, .1);
+}
+#table-logs tr th {
+    padding: 10px;
+}
+#table-logs td {
+    font-size: 16px;
+}
+
+#table-logs td a {
+    font-weight: bold;
+}
+
+.tabs {
+    display: none;
+}
+.player-canvas canvas {
+    width: 90vh !important;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, .4);
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+}
+.player-canvas {
+    float: none;
+    margin-bottom: 30px;
+}
+
+
+/* ---- help page ---- */
+#page.hfeed {
+    /*width: 70vw !important;*/
+    /*max-width: 70vw !important;*/
+    margin: 40px auto;
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid rgba(255, 255, 255, .4);
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 20px 40px;
+}

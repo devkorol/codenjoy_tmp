@@ -45,12 +45,12 @@
 <c:if test="${!justBoard && page != 'register'}" >
     <sec:authorize access="isAuthenticated()">
         <body>
-            <a href="${ctx}/process_logout" class="logout-link">Logout</a>
+            <a href="${ctx}/process_logout" class="logout-link">Выход</a>
         </body>
     </sec:authorize>
     <sec:authorize access="!isAuthenticated()">
         <body>
-            <a href="${ctx}/login?game=${gameOnly}" class="logout-link">Login</a>
+            <a href="${ctx}/login?game=${gameOnly}" class="logout-link">Логин</a>
         </body>
     </sec:authorize>
 </c:if>
