@@ -1,0 +1,360 @@
+<!--
+  #%L
+  Codenjoy - it's a dojo-like platform from developers to developers.
+  %%
+  Copyright (C) 2012 - 2023 Codenjoy
+  %%
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public
+  License along with this program.  If not, see
+  <http://www.gnu.org/licenses/gpl-3.0.html>.
+  #L%
+  -->
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Expansion codenjoy — как играть? | Игры на работе</title>
+  <base href="" target="_self">
+  <link href="../../../resources/css/all.min.css" media="all" type="text/css" rel="stylesheet">
+  <link href="../../../resources/css/custom.css" rel="stylesheet">
+
+  <script src="../../../resources/js/all.min.js"></script>
+</head>
+<body style="background-color: white;"
+      class="single single-post postid-170 single-format-standard logged-in admin-bar singular one-column content customize-support">
+<div id="settings" page="rules"></div>
+<a href="https://github.com/codenjoyme/codenjoy"><img
+    style="position: absolute; top: 0; right: 0; border: 0;z-index: 100;"
+    src="../../../resources/img/fork-me.png" alt="Fork me on GitHub"></a>
+<div id="page" class="hfeed">
+  <div id="main">
+    <div id="primary">
+      <div id="content" role="main">
+        <header class="entry-header">
+          <h1 class="entry-title">Expansion codenjoy — как играть?&nbsp;
+          </h1>
+        </header>
+        <div class="entry-content">
+          <div class="page-restrict-output">
+            <meta charset="UTF-8">
+            <h2 id="about-game">About game</h2>
+            <p>This implementation has been inspired by the online game WarLight and uses many
+              similar rules, though there are some nuances.</p>
+            <p>Can you imagine four armies on the map? The map has regions. Each region has a
+              specific number of armies controlled by one of the players. The players use different
+              colors.</p>
+            <p>In the beginning, each participant randomly occupies one of the regions with a
+              specific number of armies.</p>
+            <p>Insane kings have been trying to take over that turf again. Write your own AI to help
+              them.</p>
+            <p>Let&#39;s go over the expansion step by step. This is a turn-based game where each
+              turn (tick) lasts for 1 second, and you have to answer two questions during this
+              time.</p>
+            <ul>
+              <li>With each tick, the players get rookies, and so you have to ask yourself: Where am
+                I going to deploy the rookies in my regions? If I don&#39;t deploy the rookies in
+                one &#39;tick&#39;, they are gone.
+              </li>
+              <li>With each tick, each player gets 10 armies by default and additional 1 for each
+                captured gold.
+              </li>
+              <li>Once your armies are deployed, you should start thinking about moving the troops
+                into the other regions. You have several scenarios:
+                <ul>
+                  <li>The region where you are moving the army is not occupied yet, which means that
+                    after the turn it is occupied with the army of the player that performed the
+                    turn.
+                  </li>
+                  <li>The region where the armies go is occupied by the same player, which means the
+                    number of armies increases in it.
+                  </li>
+                  <li>The region where the armies go is occupied by the adversary, which means there&#39;s
+                    going to be a battle to be decided by how big the adversary&#39;s army and the
+                    attacker&#39;s army are. Both armies suffer losses, and the player with the
+                    surviving troops occupies the region.
+                  </li>
+                </ul>
+              </li>
+              <li>An attack is unsuccessful, if some of the defending armies survive or all
+                attacking armies are defeated. Following which, the armies in the regions are
+                recomputed, and the players hold the same regions as before the attack.
+              </li>
+              <li>You can only attack from a position where the number of armies is greater than 0
+                :)
+              </li>
+              <li>An army can only attack an adjacent region. All eight regions are adjacent (left,
+                right, up, down, left-up, left-down, right-up, right-down)
+              </li>
+              <li>Several regions can attack the same region to reinforce the attack. When this
+                happens, the attacker&#39;s armies are summed up.
+              </li>
+              <li>Each attacking army has a 100% chance to defeat one defending army.</li>
+              <li>Each defending army has a 130% chance to defeat one attacking army. For this
+                reason, to attack, you should have a numerically superior army. For details please
+                read General algorithm on fighting
+              </li>
+              <li>If the player doesn&#39;t answer this question within a second, he forfeits his
+                turn.
+              </li>
+              <li>The winner is the player who has captured all regions of the other players (not
+                necessarily all unoccupied regions on the board). If that doesn&#39;t happen in P
+                turns (by default = 600, configured in the game settings), then all players earn a
+                draw.
+              </li>
+              <li>The game will start when 4 players enter the map, meanwhile the server will ignore
+                your commands.
+              </li>
+            </ul>
+            <h2 id="general-algorithm-on-fighting">General algorithm on fighting</h2>
+            <pre><code>  if (roundDown((Max1 + Max2 + AllOther)/A) &lt;= Defender)
+  then
+      defender_win and defender_final_count is:
+          defender - roundDown((Max1 + Max2 + AllOther)/A)
+  else
+     max_attacker_win and this_attacker_final_count is:
+         if (roundDown((Max2 + Max2 + AllOther)/A) &gt;= Defender)
+         then
+             Max1 – Max2
+         else
+            (Max1 + Max2 + AllOther) - roundUp(Defender*A)
+</code>
+</pre>
+            <ol>
+              <li><strong>Max1</strong> – max attacker count (combined from all attacking cells of
+                this attacker)
+              </li>
+              <li><strong>Max2</strong> – next max attacker count (or 0 if there is only 1 attacker)
+                (combined from all attacking cells of this attacker)
+              </li>
+              <li><strong>AllOther</strong> – combined forces of all other attackers from all their
+                attacking cells (well in our case, with just 4 players, it is Max3 if it exists or 0
+                if there are no any) (edited)
+              </li>
+              <li><strong>A</strong> - defense bonus (default is 1.3)</li>
+              <li>If there are no defender than Defender = 0, and according to the logic max
+                attacker win with Max1 – Max2
+              </li>
+            </ol>
+            <h2 id="-">Расшифровка символов</h2>
+            <table>
+              <thead>
+              <tr>
+                <th>Sprite</th>
+                <th>Code</th>
+                <th>Description</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/empty.png"
+                         style="height:auto;"/></td>
+                <td><code>EMPTY(&#39;-&#39;)</code></td>
+                <td>Empty space (at layer 2) where player can go.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/floor.png"
+                         style="height:auto;"/></td>
+                <td><code>FLOOR(&#39;.&#39;)</code></td>
+                <td>Empty space (at layer 1) where player can go.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/angle_in_left.png"
+                         style="height:auto;"/></td>
+                <td><code>ANGLE_IN_LEFT(&#39;╔&#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/wall_front.png"
+                         style="height:auto;"/></td>
+                <td><code>WALL_FRONT(&#39;═&#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/angle_in_right.png"
+                         style="height:auto;"/></td>
+                <td><code>ANGLE_IN_RIGHT(&#39;┐&#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/wall_right.png"
+                         style="height:auto;"/></td>
+                <td><code>WALL_RIGHT(&#39;│&#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/angle_back_right.png"
+                         style="height:auto;"/></td>
+                <td><code>ANGLE_BACK_RIGHT(&#39;┘&#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/wall_back.png"
+                         style="height:auto;"/></td>
+                <td><code>WALL_BACK(&#39;─&#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/angle_back_left.png"
+                         style="height:auto;"/></td>
+                <td><code>ANGLE_BACK_LEFT(&#39;└&#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/wall_left.png"
+                         style="height:auto;"/></td>
+                <td><code>WALL_LEFT(&#39;║&#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/wall_back_angle_left.png"
+                         style="height:auto;"/></td>
+                <td><code>WALL_BACK_ANGLE_LEFT(&#39;┌&#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/wall_back_angle_right.png"
+                         style="height:auto;"/></td>
+                <td><code>WALL_BACK_ANGLE_RIGHT(&#39;╗&#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/angle_out_right.png"
+                         style="height:auto;"/></td>
+                <td><code>ANGLE_OUT_RIGHT(&#39;╝&#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/angle_out_left.png"
+                         style="height:auto;"/></td>
+                <td><code>ANGLE_OUT_LEFT(&#39;╚&#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/space.png"
+                         style="height:auto;"/></td>
+                <td><code>SPACE(&#39; &#39;)</code></td>
+                <td>Wall.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/force1.png"
+                         style="height:auto;"/></td>
+                <td><code>FORCE1(&#39;♥&#39;)</code></td>
+                <td>Forces of player 1.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/force2.png"
+                         style="height:auto;"/></td>
+                <td><code>FORCE2(&#39;♦&#39;)</code></td>
+                <td>Forces of player 2.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/force3.png"
+                         style="height:auto;"/></td>
+                <td><code>FORCE3(&#39;♣&#39;)</code></td>
+                <td>Forces of player 3.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/force4.png"
+                         style="height:auto;"/></td>
+                <td><code>FORCE4(&#39;♠&#39;)</code></td>
+                <td>Forces of player 4.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/exit.png"
+                         style="height:auto;"/></td>
+                <td><code>EXIT(&#39;E&#39;)</code></td>
+                <td>Exit.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/hole.png"
+                         style="height:auto;"/></td>
+                <td><code>HOLE(&#39;O&#39;)</code></td>
+                <td>Hole.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/break.png"
+                         style="height:auto;"/></td>
+                <td><code>BREAK(&#39;B&#39;)</code></td>
+                <td>Unpassable break.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/gold.png"
+                         style="height:auto;"/></td>
+                <td><code>GOLD(&#39;$&#39;)</code></td>
+                <td>Gold.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/base1.png"
+                         style="height:auto;"/></td>
+                <td><code>BASE1(&#39;1&#39;)</code></td>
+                <td>Base of player 1.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/base2.png"
+                         style="height:auto;"/></td>
+                <td><code>BASE2(&#39;2&#39;)</code></td>
+                <td>Base of player 2.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/base3.png"
+                         style="height:auto;"/></td>
+                <td><code>BASE3(&#39;3&#39;)</code></td>
+                <td>Base of player 3.</td>
+              </tr>
+              <tr>
+                <td><img width="20" src="/game/resources/expansion/sprite/base4.png"
+                         style="height:auto;"/></td>
+                <td><code>BASE4(&#39;4&#39;)</code></td>
+                <td>Base of player 4.</td>
+              </tr>
+              </tbody>
+            </table>
+            <h2 id="-">Подключение к серверу</h2>
+            <p>Итак, игрок <a href="../../../register?gameName=expansion">регистрируется на
+              сервере</a>,
+              указывая свой email</p>
+            <p>Далее необходимо подключиться из кода к серверу через websocket.
+              <a href="https://github.com/codenjoyme/codenjoy-clients.git">Эта подборка</a>
+              клиентов для разных языков программирования тебе поможет в твоей игре.
+              Как запустить клиент смотри в корне проекта в файле README.md.</p>
+            <p>Адрес для подключения к игре на сервере выглядит так (ты можешь скопировать его
+              из игровой комнаты):</p>
+            <p><code>https://[server]/game/board/player/[user]?code=[code]</code></p>
+            <p>Тут <code>[server]</code> - домен или ip-адрес игрового сервера, <code>[user]</code>
+              - id игрока, a <code>[code]</code> -
+              твой security token. Убедись что код хранится в тайне, иначе любой участник
+              сможет играть от твоего имени.</p>
+            <p>В коде твоего клиента тебе нужно найти похожую строчку и заменить её твоим URL -
+              тем самым, ты задаёшь логин/пароль для доступа к серверу.
+              Затем запусти твой клиент и убедись, что сервер получает команды твоего клиента.
+              После этого можно приступать к работе над логикой бота.</p>
+            <h2 id="-">Джентельменское соглашение</h2>
+            <p>Мы все собрались тут в первую очередь продемонстрировать
+              <del>свои мускулы</del>
+              свой скилл кодинга а значит стоит озвучить правила нашего клуба:
+            </p>
+            <ol>
+              <li>Никаких готовых библиотек и решений, только своя сила разума для превосходства над
+                противником;
+              </li>
+              <li>Никакого читинга и взлома игроков - противник сам достигнет поражения;</li>
+              <li>Никаких правил для AI алгоритмов - вам безумцам все карты в руки!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
