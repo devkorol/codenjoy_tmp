@@ -21,12 +21,33 @@
  */
 
 body {
-    background: linear-gradient(45deg, #001e5b, #9125ac, #0063af) !important;
-    height: 100vh;
+    /*background: linear-gradient(45deg, rgba(0, 30, 91,.5), rgba(145, 37, 172, 0.5), rgba(0, 99, 175,0.5)) !important;*/
+    background: url('../img/bg_ru.jpg') no-repeat fixed center center !important;
+    background-size: cover !important;
+    min-height: 100vh;
+    font-family: "Courier New", monospace !important;
+    /*font-family: Tahoma, Geneva, sans-serif !important;*/
 }
+
+body:before {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /*content: "";*/
+    background: rgba(0,0,0,.4);
+}
+
 a {
-    color: #0d497d;
+    color: #a4a4a4;
+    font-weight: 100;
 }
+
+a:hover {
+    color: #fff;
+}
+
 .logout-link {
     display: block;
     position: relative;
@@ -34,11 +55,11 @@ a {
     float: none;
     color: #fff;
     margin-right: 50px;
+    line-height: 42px;
 }
 #board_page {
     display: flex;
     justify-content: center;
-    /*align-items: center;*/
 }
 #glasses {
     width: auto;
@@ -47,14 +68,13 @@ a {
 }
 #leaderboard {
     width: 500px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.2);
-    background: rgba(255, 255, 255, 0.4);
-    color: #970e8a;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, .4);
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+    color: rgba(255, 255, 255, 0.7);
     padding: 40px;
     margin: 0 40px;
-    font-family: "Courier New", monospace;
-
-    font-weight: 100;
+    font-weight: normal;
     position: relative;
 }
 #table-logs-body tr td:first-child{
@@ -104,6 +124,11 @@ a {
 }
 .player-canvas canvas {
     width: 90vh !important;
-    border: none;
-    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, .4);
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+}
+.player-canvas {
+    float: none;
+    margin-bottom: 30px;
 }
