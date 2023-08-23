@@ -132,3 +132,16 @@ a:hover {
     float: none;
     margin-bottom: 30px;
 }
+
+
+/* ---- help page ---- */
+#page.hfeed {
+    /*width: 70vw !important;*/
+    /*max-width: 70vw !important;*/
+    margin: 40px auto;
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid rgba(255, 255, 255, .4);
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 20px 40px;
+}
