@@ -21,12 +21,13 @@
  */
 
 body {
-    /*background: linear-gradient(45deg, rgba(0, 30, 91,.5), rgba(145, 37, 172, 0.5), rgba(0, 99, 175,0.5)) !important;*/
     background: url('../img/bg_ru.jpg') no-repeat fixed center center !important;
     background-size: cover !important;
     min-height: 100vh;
     font-family: "Courier New", monospace !important;
-    /*font-family: Tahoma, Geneva, sans-serif !important;*/
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 body:before {
@@ -49,13 +50,15 @@ a:hover {
 }
 
 .logout-link {
-    display: block;
+    display: flex;
     position: relative;
     text-align: right;
     float: none;
     color: #fff;
     margin-right: 50px;
     line-height: 42px;
+    width: 100%;
+    flex-direction: row-reverse;
 }
 #board_page {
     display: flex;
@@ -144,4 +147,30 @@ a:hover {
     box-shadow: 0 0 10px rgba(0,0,0,0.7);
     color: rgba(255, 255, 255, 0.7);
     padding: 20px 40px;
+}
+
+
+
+@media (orientation: landscape) and (max-width: 900px) {
+    body {
+        width: 200vh;
+    }
+    .player-canvas canvas {
+        width: 90vh !important;
+    }
+    #leaderboard {
+        width: 90vh !important;
+    }
+}
+
+@media (orientation: portrait) and (max-width: 500px) {
+    body {
+        width: 200vw;
+    }
+    .player-canvas canvas {
+        width: 90vw !important;
+    }
+    #leaderboard {
+        width: 90vw !important;
+    }
 }
